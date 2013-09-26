@@ -2,7 +2,7 @@
  Implicit NONE
  INTEGER i,j,k,l,m
  REAL,allocatable::Bands(:,:)
- INTEGER Nbands,Npts,NEigen
+ INTEGER Nbands,Npts,NEigen,NIgnore
  Character(len=1)Junk
  LOGICAL :: file_exists
 
@@ -25,11 +25,13 @@
   ENDDO !j=1,NBands
  ENDDO !i=1,NEigen
  Close(1)
- WRITE(*,*)"Please ennter the range over which you wish to plot the bands.(X Y)"
+ WRITE(*,*)"Please enter the range over which you wish to plot the bands.(X Y)"
  READ(*,*) k,l
+ WRITE(*,*)"Please enter the number of k-points to ignore"
+ READ(*,*) NIgnore
 
  OPEN(unit=2,File="Bands.dat",Status='Unknown')
- DO i=1,NEigen
+ DO i=NIgnore+1,NEigen
   WRITE(2,*)i,(Bands(i,j),j=k,l)
  ENDDO
  GOTO 102
